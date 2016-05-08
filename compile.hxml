@@ -1,0 +1,5 @@
+-cp src
+
+-lib mmvc:1.6.1
+
+-main Main
