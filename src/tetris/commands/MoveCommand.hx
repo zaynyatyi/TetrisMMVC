@@ -12,5 +12,6 @@ class MoveCommand extends Command
 	override public function execute():Void
 	{
 		super.execute();
+		trace("we have to move element");
 	}
 }
