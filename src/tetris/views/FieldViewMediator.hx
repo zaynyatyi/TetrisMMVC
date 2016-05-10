@@ -17,13 +17,12 @@ class FieldViewMediator extends Mediator<FieldView>
 	override public function onRegister():Void
 	{
 		super.onRegister();
-		updateFieldSignal.add(handleUpdateField);
+		mediate(updateFieldSignal.add(handleUpdateField));
 	}
 
 	override public function onRemove():Void
 	{
 		super.onRemove();
-		updateFieldSignal.remove(handleUpdateField);
 	}
 
 	function handleUpdateField():Void
