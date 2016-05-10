@@ -19,6 +19,6 @@ class RotateCommand extends Command
 	override public function execute():Void
 	{
 		super.execute();
-		if(modificationContext.executeStrategy(ModificationContext.MOVE, fieldModel, 1)) updateFieldSignal.dispatch();
+		if(modificationContext.executeStrategy(ModificationContext.ROTATE, fieldModel, 1)) updateFieldSignal.dispatch();
 	}
 }
