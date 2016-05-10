@@ -4,7 +4,6 @@ import core.View;
 import mmvc.api.IViewContainer;
 import tetris.views.FieldView;
 import tetris.views.StateView;
-import tetris.views.StatsView;
 
 class ApplicationView extends View implements IViewContainer
 {
@@ -24,8 +23,6 @@ class ApplicationView extends View implements IViewContainer
 	{
 		var fieldView:FieldView = new FieldView();
 		addChild(fieldView);
-		var statsView:StatsView = new StatsView();
-		addChild(statsView);
 		var stateView:StateView = new StateView();
 		addChild(stateView);
 	}
