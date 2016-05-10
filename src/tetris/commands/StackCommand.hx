@@ -3,9 +3,11 @@ package tetris.commands;
 import mmvc.impl.Command;
 import tetris.models.ElementModel;
 import tetris.models.FieldModel;
+import tetris.signals.LinesRemoveSignal;
 
 class StackCommand extends Command
 {
+	@inject public var linesRemoveSignal:LinesRemoveSignal;
 	@inject public var fieldModel:FieldModel;
 
 	public function new()
@@ -36,7 +38,8 @@ class StackCommand extends Command
 		}
 		if (isOverflowed) {
 			fieldModel.isOverflowed = true;
+		} else {
+			linesRemoveSignal.dispatch();
 		}
-
 	}
 }
