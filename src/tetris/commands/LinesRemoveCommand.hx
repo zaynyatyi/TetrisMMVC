@@ -3,10 +3,14 @@ package tetris.commands;
 import mmvc.impl.Command;
 import tetris.models.ElementModel;
 import tetris.models.FieldModel;
+import tetris.models.StatsModel;
+import tetris.signals.viewUpdaters.UpdateStatsSignal;
 
 class LinesRemoveCommand extends Command
 {
+	@inject public var updateStatsSignal:UpdateStatsSignal;
 	@inject public var fieldModel:FieldModel;
+	@inject public var statsModel:StatsModel;
 
 	public function new()
 	{
@@ -19,6 +23,8 @@ class LinesRemoveCommand extends Command
 		for (rowIndex in 0...fieldModel.squares.length) {
 			if (fieldModel.squares[rowIndex].indexOf(0) == -1) {
 				moveFieldDown(rowIndex);
+				statsModel.linesDestroyed++;
+				updateStatsSignal.dispatch();
 			}
 		}
 	}

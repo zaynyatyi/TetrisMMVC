@@ -2,10 +2,16 @@ package tetris.commands;
 
 import mmvc.impl.Command;
 import tetris.models.FieldModel;
+import tetris.models.StatsModel;
+import tetris.signals.viewUpdaters.UpdateFieldSignal;
+import tetris.signals.viewUpdaters.UpdateStatsSignal;
 
 class ClearCommand extends Command
 {
+	@inject public var updateStatsSignal:UpdateStatsSignal;
+	@inject public var updateFieldSignal:UpdateFieldSignal;
 	@inject public var fieldModel:FieldModel;
+	@inject public var statsModel:StatsModel;
 
 	public function new()
 	{
@@ -24,5 +30,8 @@ class ClearCommand extends Command
 				fieldModel.squares[row].push(0);
 			}
 		}
+		statsModel.linesDestroyed = 0;
+		updateStatsSignal.dispatch();
+		updateFieldSignal.dispatch();
 	}
 }

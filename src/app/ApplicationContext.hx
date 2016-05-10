@@ -18,6 +18,7 @@ import tetris.commands.userInput.RotateCommand;
 import tetris.models.ElementsModel;
 import tetris.models.FieldModel;
 import tetris.models.StateModel;
+import tetris.models.StatsModel;
 import tetris.signals.CheckStateSignal;
 import tetris.signals.ClearSignal;
 import tetris.signals.ExtrudeSignal;
@@ -72,6 +73,7 @@ class ApplicationContext extends Context
 		//Mapping models
 		injector.mapSingleton(ElementsModel);
 		injector.mapSingleton(FieldModel);
+		injector.mapSingleton(StatsModel);
 		injector.mapSingleton(StateModel);
 
 		//Mapping views and mediators

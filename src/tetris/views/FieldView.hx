@@ -16,6 +16,8 @@ class FieldView extends DataView<FieldModel>
 	static inline var NONACTIVE_CELL_CLASS:String = "nonactive-cell";
 	static inline var ACTIVE_CELL_CLASS:String = "active-cell";
 
+	public var statsView:StatsView;
+
 	var cellsPool:Array<Array<Element>>;
 
 	public function new(?data:FieldModel)
@@ -42,7 +44,7 @@ class FieldView extends DataView<FieldModel>
 	{
 		super.initialize();
 
-		var statsView:StatsView = new StatsView();
+		statsView = new StatsView();
 		addChild(statsView);
 	}
 
