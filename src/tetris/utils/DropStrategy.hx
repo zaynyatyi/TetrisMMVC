@@ -10,6 +10,8 @@ class DropStrategy extends ModifyStrategy
 
 	override public function modify(fieldSquares:Array<Array<Int>>, chunk:ElementModel, direction:Int = 0):Bool
 	{
+		if (chunk == null) return false;
+
 		var result = true;
 		if (chunk.y + chunk.height >= fieldSquares.length) {
 			result = false;

@@ -10,6 +10,8 @@ class MoveStrategy extends ModifyStrategy
 
 	override public function modify(fieldSquares:Array<Array<Int>>, chunk:ElementModel, direction:Int = 0):Bool
 	{
+		if (chunk == null) return false;
+
 		var result = true;
 		if (direction != 0) {
 			//Normalize direction if somehow not 1 or -1 will be passed
