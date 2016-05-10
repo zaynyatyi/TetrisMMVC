@@ -236,6 +236,7 @@ class View
 		element = Browser.document.createElement(tagName);
 		element.setAttribute("id", id);
 		element.className = className;
+		applyStyle();
 		#end
 	}
 
@@ -268,4 +269,10 @@ class View
 
 		return index;
 	}
+
+	#if js
+	function applyStyle():Void
+	{
+	}
+	#end
 }

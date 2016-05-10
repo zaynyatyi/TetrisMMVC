@@ -29,6 +29,7 @@
   <!-- haxelib libraries -->
   <haxelib>
     <library name="-lib mmvc:1.6.1" />
+    <library name="-lib compiletime:2.6.0" />
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
