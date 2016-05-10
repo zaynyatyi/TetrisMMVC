@@ -10,6 +10,10 @@ import tetris.commands.ExtrudeCommand;
 import tetris.commands.LoopCommand;
 import tetris.commands.MoveCommand;
 import tetris.commands.StackCommand;
+import tetris.commands.userInput.MoveDownCommand;
+import tetris.commands.userInput.MoveLeftCommand;
+import tetris.commands.userInput.MoveRightCommand;
+import tetris.commands.userInput.RotateCommand;
 import tetris.models.ElementsModel;
 import tetris.models.FieldModel;
 import tetris.models.StateModel;
@@ -19,10 +23,15 @@ import tetris.signals.ExtrudeSignal;
 import tetris.signals.LoopSignal;
 import tetris.signals.MoveSignal;
 import tetris.signals.StackSignal;
+import tetris.signals.userInput.MoveDownSignal;
+import tetris.signals.userInput.MoveLeftSignal;
+import tetris.signals.userInput.MoveRightSignal;
+import tetris.signals.userInput.RotateSignal;
 import tetris.signals.viewUpdaters.FinishGameSignal;
 import tetris.signals.viewUpdaters.UpdateFieldSignal;
 import tetris.signals.viewUpdaters.UpdateStatsSignal;
 import tetris.utils.ElementsCreator;
+import tetris.utils.ModificationContext;
 import tetris.utils.RegularElementsCreator;
 import tetris.views.FieldView;
 import tetris.views.FieldViewMediator;
@@ -46,6 +55,11 @@ class ApplicationContext extends Context
 		commandMap.mapSignalClass(ClearSignal, ClearCommand);
 		commandMap.mapSignalClass(CheckStateSignal, CheckStateCommand);
 		commandMap.mapSignalClass(ExtrudeSignal, ExtrudeCommand);
+		//Mapping user input related signals
+		commandMap.mapSignalClass(MoveLeftSignal, MoveLeftCommand);
+		commandMap.mapSignalClass(MoveRightSignal, MoveRightCommand);
+		commandMap.mapSignalClass(MoveDownSignal, MoveDownCommand);
+		commandMap.mapSignalClass(RotateSignal, RotateCommand);
 
 		//Mapping signals which will be used by mediators to update related views
 		injector.mapSingleton(UpdateStatsSignal);
@@ -65,6 +79,8 @@ class ApplicationContext extends Context
 		//Tetris elements factory so if we will need to change created elements we will need to remap it to another factory class
 		//We can also have few factories (to implement some extra types of elemnts), but they should be mapped as different instances
 		injector.mapSingletonOf(ElementsCreator, RegularElementsCreator);
+		//Tetris elemnts strategy context mapping
+		injector.mapSingleton(ModificationContext);
 
 		//Wiring for main application module
 		mediatorMap.mapView(ApplicationView, ApplicationViewMediator);

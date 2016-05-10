@@ -36,17 +36,19 @@ class CheckStateCommand extends Command
 	{
 		super.execute();
 		if (fieldModel.isInitialized) {
-			if (fieldModel.elementModel.currentChunk == null) {
-				extrudeSignal.dispatch();
-			} else {
-				if (isAbleToMove()) {
-					moveSignal.dispatch();
+			if (!fieldModel.isOverflowed) {
+				if (fieldModel.elementModel.currentChunk == null) {
+					extrudeSignal.dispatch();
 				} else {
-					stackSignal.dispatch();
+					if (isAbleToMove()) {
+						moveSignal.dispatch();
+					} else {
+						stackSignal.dispatch();
+					}
 				}
+			} else {
+				finishGameSignal.dispatch();
 			}
-		} else {
-			clearSignal.dispatch();
 		}
 	}
 
@@ -58,7 +60,6 @@ class CheckStateCommand extends Command
 			if (chunk.y + chunk.height >= fieldModel.squares.length) {
 				result = false;
 			} else {
-				var chunk:ElementModel = fieldModel.elementModel.currentChunk;
 				for (rowIndex in 0...chunk.height) {
 					for (columnIndex in 0...chunk.width) {
 						var cellRow:Int = rowIndex + chunk.y;
