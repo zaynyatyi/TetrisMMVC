@@ -153,6 +153,7 @@ class TetrisTest
 	@Before
 	public function setup():Void
 	{
+		checkPresets();
 		//Just a placeholder for all signals since we will not test gameflow
 		signalPlaceholder = new Signal0();
 
@@ -351,5 +352,39 @@ class TetrisTest
 			}
 		}
 		return result;
+	}
+
+	//we have to check if our presets are in cync with settings and between itselves
+	function checkPresets():Void
+	{
+		var isPassed:Bool = true;
+		var message:String = "";
+		if (EMPTY == null ||
+			FILLED == null ||
+			STACKED == null ||
+			MODIFIED == null ||
+			EMPTY.length == 0 ||
+			FILLED.length == 0 ||
+			STACKED.length == 0 ||
+			MODIFIED.length == 0 ||
+			EMPTY.length != FILLED.length ||
+			EMPTY.length != STACKED.length ||
+			EMPTY.length != MODIFIED.length ||
+			EMPTY[0].length != FILLED[0].length ||
+			EMPTY[0].length != STACKED[0].length ||
+			EMPTY[0].length != MODIFIED[0].length) {
+			isPassed = false;
+			message += "\n\tPresets arrays are different or empty";
+		}
+		if (EMPTY == null || Settings.instance.fieldRows != EMPTY.length) {
+			isPassed = false;
+			message += "\n\tRows in setting and in presets are different";
+		}
+		if (EMPTY == null || EMPTY.length == 0 || Settings.instance.fieldColumns != EMPTY[0].length) {
+			isPassed = false;
+			message += "\n\tColumns in setting and in presets are different";
+		}
+
+		if (!isPassed) Assert.fail("Presets are wrong: " + message);
 	}
 }
