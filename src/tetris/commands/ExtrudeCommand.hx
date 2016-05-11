@@ -19,11 +19,15 @@ class ExtrudeCommand extends Command
 	override public function execute():Void
 	{
 		super.execute();
-		if (elementModel.nextChunk != null) {
-			elementModel.currentChunk = elementModel.nextChunk;
-		} else {
-			elementModel.currentChunk = elementsCreator.createElement();
+		try {
+			if (elementModel.nextChunk != null) {
+				elementModel.currentChunk = elementModel.nextChunk;
+			} else {
+				elementModel.currentChunk = elementsCreator.createElement();
+			}
+			elementModel.nextChunk = elementsCreator.createElement();
+		} catch (error:String) {
+			trace ("Error in elements creation");
 		}
-		elementModel.nextChunk = elementsCreator.createElement();
 	}
 }
