@@ -11,6 +11,7 @@ import tetris.signals.userInput.MoveRightSignal;
 import tetris.signals.userInput.RotateSignal;
 import tetris.signals.viewUpdaters.FinishGameSignal;
 
+//That mediator will catch all state changes (User input, render frame requests)
 class StateViewMediator extends Mediator<StateView>
 {
 	@inject public var loopSignal:LoopSignal;
@@ -27,6 +28,8 @@ class StateViewMediator extends Mediator<StateView>
 	public function new()
 	{
 		super();
+		//We have to reuest updates from view since it's "user" action
+		//It will be easy to implement step by step update based on user input in that way
 		loopTimer = new Timer(Std.int(1000 / Settings.instance.fps));
 	}
 
@@ -41,8 +44,10 @@ class StateViewMediator extends Mediator<StateView>
 
 	override public function onRemove():Void
 	{
+		//we have to release timer to prevent memory leak
 		loopTimer.run = null;
 		loopTimer.stop();
+		//we have to release all views callback to prevent memory leak
 		var stateView:StateView = cast(view, StateView);
 		stateView.release();
 		super.onRemove();

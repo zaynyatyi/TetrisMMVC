@@ -36,9 +36,11 @@ class StackCommand extends Command
 			}
 			fieldModel.elementsModel.currentChunk = null;
 		}
+		//If element stacked we have to check if it overflows field and we have to notify router about it
 		if (isOverflowed) {
 			fieldModel.isOverflowed = true;
 		} else {
+			//If not we have to call lines removement task after every stack
 			linesRemoveSignal.dispatch();
 		}
 	}

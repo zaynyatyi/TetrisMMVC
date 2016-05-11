@@ -3,6 +3,7 @@ package tetris.utils;
 import Settings.Chunk;
 import tetris.models.ElementModel;
 
+//Implementation of regular element factory
 class RegularElementsCreator extends ElementsCreator
 {
 	public function new()

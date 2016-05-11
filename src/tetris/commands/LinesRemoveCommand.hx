@@ -24,11 +24,14 @@ class LinesRemoveCommand extends Command
 			if (fieldModel.squares[rowIndex].indexOf(0) == -1) {
 				moveFieldDown(rowIndex);
 				statsModel.linesDestroyed++;
+				//Updates stats view on any line removement because there could be some effects of "everyaction" behavior
+				//Could be used one signal with passed lines amount also
 				updateStatsSignal.dispatch();
 			}
 		}
 	}
 
+	//Moves line by line. It doesn't checks floating blocks
 	function moveFieldDown(rowIndex:Int):Void
 	{
 		while (rowIndex >= 0) {

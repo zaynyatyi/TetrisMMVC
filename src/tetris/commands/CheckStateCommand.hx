@@ -14,7 +14,7 @@ import tetris.signals.viewUpdaters.UpdateStatsSignal;
 /*
  * Mostly signals router command
  *
- * It will check if element should be created, could be moved or should be stacked
+ * It will check if element should be created, could be moved or should be stacked or if game should be finished
 */
 class CheckStateCommand extends Command
 {

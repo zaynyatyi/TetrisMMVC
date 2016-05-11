@@ -18,6 +18,7 @@ class FieldView extends DataView<FieldModel>
 
 	public var statsView:StatsView;
 
+	//Using cells pool since amount of elements is static and we don't need to re-create them on every render loop
 	var cellsPool:Array<Array<Element>>;
 
 	public function new(?data:FieldModel)

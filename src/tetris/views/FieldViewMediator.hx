@@ -38,6 +38,7 @@ class FieldViewMediator extends Mediator<FieldView>
 
 	function handleUpdateStats():Void
 	{
+		//we have to cast to pass updated data to child view
 		cast(view, FieldView).statsView.setData(statsModel, true);
 	}
 }

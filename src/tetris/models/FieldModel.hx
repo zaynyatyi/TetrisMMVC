@@ -3,6 +3,7 @@ package tetris.models;
 import mmvc.impl.Actor;
 import tetris.models.ElementsModel;
 
+//Contains current field state
 class FieldModel extends Actor
 {
 	@inject public var elementsModel:ElementsModel;

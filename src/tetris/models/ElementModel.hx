@@ -1,5 +1,6 @@
 package tetris.models;
 
+//Just an element primitive
 class ElementModel
 {
 	public var x:Int;
@@ -13,6 +14,7 @@ class ElementModel
 		field = [];
 	}
 
+	//Just element params getters. Not models modification logic or something like that.
 	function get_width():Int
 	{
 		//Since all elemnts should fit square field we hace to return only first row length to get element width

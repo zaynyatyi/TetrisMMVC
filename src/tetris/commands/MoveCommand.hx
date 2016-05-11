@@ -14,6 +14,8 @@ class MoveCommand extends Command
 		super();
 	}
 
+	//It will move anyway because moving ability check is outside of that task
+	//Just checks if it's time for automatic movement
 	override public function execute():Void
 	{
 		super.execute();
