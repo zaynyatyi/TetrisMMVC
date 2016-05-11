@@ -4,3 +4,5 @@
 -lib compiletime:2.6.0
 
 -main Main
+
+-js bin/TetrisMVC.js
