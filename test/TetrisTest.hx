@@ -4,6 +4,9 @@ import massive.munit.Assert;
 import msignal.Signal.Signal0;
 import tetris.commands.ClearCommand;
 import tetris.commands.ExtrudeCommand;
+import tetris.commands.LinesRemoveCommand;
+import tetris.commands.MoveCommand;
+import tetris.models.ElementModel;
 import tetris.models.ElementsModel;
 import tetris.models.FieldModel;
 import tetris.models.StateModel;
@@ -12,6 +15,112 @@ import tetris.utils.RegularElementsCreator;
 
 class TetrisTest
 {
+	static var EMPTY:Array<Array<Int>> = [
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	];
+
+	static var FILLED:Array<Array<Int>> = [
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 1, 0, 0, 0, 0, 0, 0, 1, 0],
+		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+		[1, 1, 1, 1, 1, 1, 0, 1, 1, 1]
+	];
+
+	static var MODIFIED:Array<Array<Int>> = [
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 1, 0, 0, 0, 0, 0, 0, 1, 0],
+		[1, 1, 1, 1, 1, 1, 0, 1, 1, 1]
+	];
+
+	static var STACKED:Array<Array<Int>> = [
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+		[0, 1, 0, 0, 0, 0, 0, 1, 1, 0],
+		[1, 1, 1, 1, 1, 1, 0, 1, 1, 1]
+	];
+
+	static var ELEMENT_FIELD:Array<Array<Int>> = [
+		[1, 1],
+		[1, 0]
+	];
+
+	static var ROTATED_ELEMENT_FIELD:Array<Array<Int>> = [
+		[1, 1],
+		[0, 1]
+	];
+
+	static var INITIAL_X:Int = 7;
+	static var INITIAL_Y:Int = 16;
+	static var MOVED_X:Int = 17;
+
 	var fieldModel:FieldModel;
 	var stateModel:StateModel;
 	var statsModel:StatsModel;
@@ -80,6 +189,60 @@ class TetrisTest
 		Assert.isNotNull(fieldModel.elementsModel.nextChunk);
 	}
 
+	@Test
+	public function movingTest():Void
+	{
+		clearModels();
+		fieldModel.squares = FILLED;
+		fieldModel.elementsModel.currentChunk = new ElementModel();
+		fieldModel.elementsModel.currentChunk.field = ELEMENT_FIELD;
+		fieldModel.elementsModel.currentChunk.x = INITIAL_X;
+		fieldModel.elementsModel.currentChunk.y = INITIAL_Y;
+		var moveCommand:MoveCommand = new MoveCommand();
+		moveCommand.fieldModel = fieldModel;
+		moveCommand.updateFieldSignal = cast signalPlaceholder;
+		moveCommand.execute();
+		//Should move
+		Assert.areEqual(fieldModel.elementsModel.currentChunk.y, INITIAL_Y + 1);
+		moveCommand.execute();
+		//Shouldn't move
+		Assert.areNotEqual(fieldModel.elementsModel.currentChunk.y, MOVED_X + 1);
+	}
+
+	@Test
+	public function linesRemovingTest():Void
+	{
+		clearModels();
+		fieldModel.squares = FILLED;
+		var linesCount:Int = statsModel.linesDestroyed;
+		Assert.isFalse(compareArrays(fieldModel.squares, MODIFIED));
+		var linesRemoveCommand:LinesRemoveCommand = new LinesRemoveCommand();
+		linesRemoveCommand.fieldModel = fieldModel;
+		linesRemoveCommand.statsModel = statsModel;
+		linesRemoveCommand.updateStatsSignal = cast signalPlaceholder;
+		linesRemoveCommand.execute();
+		Assert.isTrue(compareArrays(fieldModel.squares, MODIFIED));
+		Assert.areEqual(statsModel.linesDestroyed, linesCount + 1);
+	}
+
+	@Test
+	public function stackingTest():Void
+	{
+		clearModels();
+	}
+
+	@Test
+	public function elementMovingTest():Void
+	{
+		clearModels();
+	}
+
+	@Test
+	public function elementRotationTest():Void
+	{
+		clearModels();
+	}
+
 	function clearModels():Void
 	{
 		var clearCommand = new ClearCommand();
@@ -88,5 +251,24 @@ class TetrisTest
 		clearCommand.updateFieldSignal = cast signalPlaceholder;
 		clearCommand.updateStatsSignal = cast signalPlaceholder;
 		clearCommand.execute();
+	}
+
+	function compareArrays(a:Array<Array<Int>>, b:Array<Array<Int>>):Bool
+	{
+		var result:Bool = true;
+		if (a == null || b == null) {
+			result = false;
+		} else {
+			if (a.length != b.length) {
+				result = false;
+			} else {
+				for (rowIndex in 0...a.length) {
+					for (columnIndex in 0...a[rowIndex].length) {
+						if (a[rowIndex][columnIndex] != b[rowIndex][columnIndex]) result = false;
+					}
+				}
+			}
+		}
+		return result;
 	}
 }
