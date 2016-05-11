@@ -20,6 +20,7 @@ class FieldView extends DataView<FieldModel>
 
 	//Using cells pool since amount of elements is static and we don't need to re-create them on every render loop
 	var cellsPool:Array<Array<Element>>;
+	var previousHint:Array<Array<Int>>;
 
 	public function new(?data:FieldModel)
 	{
@@ -90,6 +91,18 @@ class FieldView extends DataView<FieldModel>
 						}
 					}
 				}
+			}
+		}
+		//Basic hidden hint implementation. Will trace next element preview to console.
+		if (previousHint == null || previousHint != data.elementsModel.nextChunk.field) {
+			if (data.elementsModel.nextChunk != null) {
+				trace("Hint: ");
+				for (row in data.elementsModel.nextChunk.field) {
+					trace(row.toString());
+				}
+				//Since we will redefine array instance in extrude task links to it will be changed too
+				//so we have to compare just links to prevent repeating of outputs
+				previousHint = data.elementsModel.nextChunk.field;
 			}
 		}
 	}
