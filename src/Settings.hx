@@ -45,6 +45,7 @@ class Settings
 	}
 }
 
+//Typedef for proper json parsing
 typedef Chunk = {
 	field:Array<Array<Int>>
 }
