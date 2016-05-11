@@ -20,7 +20,7 @@ class ModificationContext
 	public function executeStrategy(actionType:String, fieldModel:FieldModel, direction:Int = 0):Bool
 	{
 		if (strategies.exists(actionType)) {
-			return strategies.get(actionType).modify(fieldModel.squares, fieldModel.elementModel.currentChunk, direction);
+			return strategies.get(actionType).modify(fieldModel.squares, fieldModel.elementsModel.currentChunk, direction);
 		} else {
 			return false;
 		}

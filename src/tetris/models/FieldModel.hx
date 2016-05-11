@@ -5,7 +5,7 @@ import tetris.models.ElementsModel;
 
 class FieldModel extends Actor
 {
-	@inject public var elementModel:ElementsModel;
+	@inject public var elementsModel:ElementsModel;
 
 	public var squares:Array<Array<Int>>;
 	public var lastUpdate:Float = 0;

@@ -20,8 +20,8 @@ class MoveCommand extends Command
 		var currentTimestamp:Float = Date.now().getTime();
 		if (currentTimestamp - fieldModel.lastUpdate >= Settings.instance.moveDelay) {
 			fieldModel.lastUpdate = currentTimestamp;
-			if (fieldModel.elementModel.currentChunk != null) {
-				fieldModel.elementModel.currentChunk.y++;
+			if (fieldModel.elementsModel.currentChunk != null) {
+				fieldModel.elementsModel.currentChunk.y++;
 				updateFieldSignal.dispatch();
 			} else {
 				//If move signal was fired without element extruded for some reason

@@ -75,8 +75,8 @@ class FieldView extends DataView<FieldModel>
 			}
 		}
 		//Drawing current moving element
-		if (data.elementModel.currentChunk != null) {
-			var chunk:ElementModel = data.elementModel.currentChunk;
+		if (data.elementsModel.currentChunk != null) {
+			var chunk:ElementModel = data.elementsModel.currentChunk;
 			for (rowIndex in 0...chunk.height) {
 				for (columnIndex in 0...chunk.width) {
 					var cellRow:Int = rowIndex + chunk.y;

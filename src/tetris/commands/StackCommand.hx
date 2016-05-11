@@ -19,8 +19,8 @@ class StackCommand extends Command
 	{
 		super.execute();
 		var isOverflowed:Bool = false;
-		if (fieldModel.elementModel.currentChunk != null) {
-			var chunk:ElementModel = fieldModel.elementModel.currentChunk;
+		if (fieldModel.elementsModel.currentChunk != null) {
+			var chunk:ElementModel = fieldModel.elementsModel.currentChunk;
 			for (rowIndex in 0...chunk.height) {
 				for (columnIndex in 0...chunk.width) {
 					var cellRow:Int = rowIndex + chunk.y;
@@ -34,7 +34,7 @@ class StackCommand extends Command
 					}
 				}
 			}
-			fieldModel.elementModel.currentChunk = null;
+			fieldModel.elementsModel.currentChunk = null;
 		}
 		if (isOverflowed) {
 			fieldModel.isOverflowed = true;

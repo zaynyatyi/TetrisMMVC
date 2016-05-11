@@ -37,7 +37,7 @@ class CheckStateCommand extends Command
 		super.execute();
 		if (fieldModel.isInitialized) {
 			if (!fieldModel.isOverflowed) {
-				if (fieldModel.elementModel.currentChunk == null) {
+				if (fieldModel.elementsModel.currentChunk == null) {
 					extrudeSignal.dispatch();
 				} else {
 					if (isAbleToMove()) {
@@ -55,8 +55,8 @@ class CheckStateCommand extends Command
 	function isAbleToMove():Bool
 	{
 		var result:Bool = true;
-		if (fieldModel.elementModel.currentChunk != null) {
-			var chunk:ElementModel = fieldModel.elementModel.currentChunk;
+		if (fieldModel.elementsModel.currentChunk != null) {
+			var chunk:ElementModel = fieldModel.elementsModel.currentChunk;
 			if (chunk.y + chunk.height >= fieldModel.squares.length) {
 				result = false;
 			} else {
