@@ -7,11 +7,13 @@ import tetris.commands.ExtrudeCommand;
 import tetris.commands.LinesRemoveCommand;
 import tetris.commands.MoveCommand;
 import tetris.commands.StackCommand;
+import tetris.commands.userInput.RotateCommand;
 import tetris.models.ElementModel;
 import tetris.models.ElementsModel;
 import tetris.models.FieldModel;
 import tetris.models.StateModel;
 import tetris.models.StatsModel;
+import tetris.utils.ModificationContext;
 import tetris.utils.RegularElementsCreator;
 
 class TetrisTest
@@ -248,6 +250,20 @@ class TetrisTest
 	public function elementRotationTest():Void
 	{
 		clearModels();
+		fieldModel.squares = FILLED;
+		fieldModel.elementsModel.currentChunk = new ElementModel();
+		fieldModel.elementsModel.currentChunk.field = ELEMENT_FIELD;
+		fieldModel.elementsModel.currentChunk.x = INITIAL_X;
+		fieldModel.elementsModel.currentChunk.y = INITIAL_Y;
+		var rotateCommand:RotateCommand = new RotateCommand();
+		rotateCommand.modificationContext = new ModificationContext();
+		rotateCommand.fieldModel = fieldModel;
+		rotateCommand.updateFieldSignal = cast signalPlaceholder;
+		rotateCommand.execute();
+		Assert.isTrue(compareArrays(fieldModel.elementsModel.currentChunk.field, ELEMENT_FIELD));
+		fieldModel.squares = EMPTY;
+		rotateCommand.execute();
+		Assert.isTrue(compareArrays(fieldModel.elementsModel.currentChunk.field, ROTATED_ELEMENT_FIELD));
 	}
 
 	function clearModels():Void
