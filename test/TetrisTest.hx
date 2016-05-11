@@ -7,6 +7,9 @@ import tetris.commands.ExtrudeCommand;
 import tetris.commands.LinesRemoveCommand;
 import tetris.commands.MoveCommand;
 import tetris.commands.StackCommand;
+import tetris.commands.userInput.MoveDownCommand;
+import tetris.commands.userInput.MoveLeftCommand;
+import tetris.commands.userInput.MoveRightCommand;
 import tetris.commands.userInput.RotateCommand;
 import tetris.models.ElementModel;
 import tetris.models.ElementsModel;
@@ -59,7 +62,7 @@ class TetrisTest
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-		[0, 1, 0, 0, 0, 0, 0, 0, 1, 0],
+		[0, 1, 0, 0, 0, 0, 1, 0, 1, 0],
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 		[1, 1, 1, 1, 1, 1, 0, 1, 1, 1]
 	];
@@ -83,7 +86,7 @@ class TetrisTest
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-		[0, 1, 0, 0, 0, 0, 0, 0, 1, 0],
+		[0, 1, 0, 0, 0, 0, 1, 0, 1, 0],
 		[1, 1, 1, 1, 1, 1, 0, 1, 1, 1]
 	];
 
@@ -106,7 +109,7 @@ class TetrisTest
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
-		[0, 1, 0, 0, 0, 0, 0, 1, 1, 0],
+		[0, 1, 0, 0, 0, 0, 1, 1, 1, 0],
 		[1, 1, 1, 1, 1, 1, 0, 1, 1, 1]
 	];
 
@@ -123,6 +126,9 @@ class TetrisTest
 	static var INITIAL_X:Int = 7;
 	static var INITIAL_Y:Int = 16;
 	static var MOVED_Y:Int = 17;
+	static var LEFT_X:Int = 0;
+	static var RIGHT_X:Int = 8;
+	static var BOTTOM_Y:Int = 18;
 
 	var fieldModel:FieldModel;
 	var stateModel:StateModel;
@@ -244,6 +250,58 @@ class TetrisTest
 	public function elementMovingTest():Void
 	{
 		clearModels();
+		fieldModel.squares = FILLED;
+		fieldModel.elementsModel.currentChunk = new ElementModel();
+		fieldModel.elementsModel.currentChunk.field = ELEMENT_FIELD;
+		fieldModel.elementsModel.currentChunk.x = INITIAL_X;
+		fieldModel.elementsModel.currentChunk.y = INITIAL_Y;
+		var moveDownCommand:MoveDownCommand = new MoveDownCommand();
+		moveDownCommand.modificationContext = new ModificationContext();
+		moveDownCommand.fieldModel = fieldModel;
+		moveDownCommand.updateFieldSignal = cast signalPlaceholder;
+		moveDownCommand.execute();
+		Assert.areEqual(fieldModel.elementsModel.currentChunk.y, INITIAL_Y);
+
+		var moveRightCommand:MoveRightCommand = new MoveRightCommand();
+		moveRightCommand.modificationContext = new ModificationContext();
+		moveRightCommand.fieldModel = fieldModel;
+		moveRightCommand.updateFieldSignal = cast signalPlaceholder;
+		moveRightCommand.execute();
+		Assert.areEqual(fieldModel.elementsModel.currentChunk.x, INITIAL_X);
+
+		var moveLeftCommand:MoveLeftCommand = new MoveLeftCommand();
+		moveLeftCommand.modificationContext = new ModificationContext();
+		moveLeftCommand.fieldModel = fieldModel;
+		moveLeftCommand.updateFieldSignal = cast signalPlaceholder;
+		moveLeftCommand.execute();
+		Assert.areEqual(fieldModel.elementsModel.currentChunk.x, INITIAL_X);
+
+		fieldModel.squares = EMPTY;
+		fieldModel.elementsModel.currentChunk.x = INITIAL_X;
+		fieldModel.elementsModel.currentChunk.y = INITIAL_Y;
+		moveDownCommand.execute();
+		Assert.areEqual(fieldModel.elementsModel.currentChunk.y, INITIAL_Y + 1);
+		fieldModel.elementsModel.currentChunk.x = INITIAL_X;
+		fieldModel.elementsModel.currentChunk.y = INITIAL_Y;
+		moveRightCommand.execute();
+		Assert.areEqual(fieldModel.elementsModel.currentChunk.x, INITIAL_X + 1);
+		fieldModel.elementsModel.currentChunk.x = INITIAL_X;
+		fieldModel.elementsModel.currentChunk.y = INITIAL_Y;
+		moveLeftCommand.execute();
+		Assert.areEqual(fieldModel.elementsModel.currentChunk.x, INITIAL_X - 1);
+
+		fieldModel.elementsModel.currentChunk.x = INITIAL_X;
+		fieldModel.elementsModel.currentChunk.y = BOTTOM_Y;
+		moveDownCommand.execute();
+		Assert.areNotEqual(fieldModel.elementsModel.currentChunk.y, BOTTOM_Y + 1);
+		fieldModel.elementsModel.currentChunk.x = RIGHT_X;
+		fieldModel.elementsModel.currentChunk.y = INITIAL_Y;
+		moveRightCommand.execute();
+		Assert.areNotEqual(fieldModel.elementsModel.currentChunk.x, RIGHT_X + 1);
+		fieldModel.elementsModel.currentChunk.x = LEFT_X;
+		fieldModel.elementsModel.currentChunk.y = INITIAL_Y;
+		moveLeftCommand.execute();
+		Assert.areNotEqual(fieldModel.elementsModel.currentChunk.x, LEFT_X - 1);
 	}
 
 	@Test
