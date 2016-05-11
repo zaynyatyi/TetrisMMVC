@@ -7,7 +7,6 @@ class Settings
 
 	public var fps(default, null):Int;
 	public var moveDelay(default, null):Int;
-	public var dropDelay(default, null):Int;
 
 	public var fieldColumns(default, null):Int;
 	public var fieldRows(default, null):Int;
@@ -28,7 +27,6 @@ class Settings
 		fps = 30;
 		//elements moving delay defined in design document
 		moveDelay = 300;
-		dropDelay = 100;
 
 		fieldColumns = 10;
 		fieldRows = 20;
