@@ -6,6 +6,7 @@ import tetris.commands.ClearCommand;
 import tetris.commands.ExtrudeCommand;
 import tetris.commands.LinesRemoveCommand;
 import tetris.commands.MoveCommand;
+import tetris.commands.StackCommand;
 import tetris.models.ElementModel;
 import tetris.models.ElementsModel;
 import tetris.models.FieldModel;
@@ -119,7 +120,7 @@ class TetrisTest
 
 	static var INITIAL_X:Int = 7;
 	static var INITIAL_Y:Int = 16;
-	static var MOVED_X:Int = 17;
+	static var MOVED_Y:Int = 17;
 
 	var fieldModel:FieldModel;
 	var stateModel:StateModel;
@@ -193,7 +194,6 @@ class TetrisTest
 	public function movingTest():Void
 	{
 		clearModels();
-		fieldModel.squares = FILLED;
 		fieldModel.elementsModel.currentChunk = new ElementModel();
 		fieldModel.elementsModel.currentChunk.field = ELEMENT_FIELD;
 		fieldModel.elementsModel.currentChunk.x = INITIAL_X;
@@ -201,12 +201,9 @@ class TetrisTest
 		var moveCommand:MoveCommand = new MoveCommand();
 		moveCommand.fieldModel = fieldModel;
 		moveCommand.updateFieldSignal = cast signalPlaceholder;
+		fieldModel.lastUpdate = 0;
 		moveCommand.execute();
-		//Should move
 		Assert.areEqual(fieldModel.elementsModel.currentChunk.y, INITIAL_Y + 1);
-		moveCommand.execute();
-		//Shouldn't move
-		Assert.areNotEqual(fieldModel.elementsModel.currentChunk.y, MOVED_X + 1);
 	}
 
 	@Test
@@ -229,6 +226,16 @@ class TetrisTest
 	public function stackingTest():Void
 	{
 		clearModels();
+		fieldModel.squares = MODIFIED;
+		fieldModel.elementsModel.currentChunk = new ElementModel();
+		fieldModel.elementsModel.currentChunk.field = ELEMENT_FIELD;
+		fieldModel.elementsModel.currentChunk.x = INITIAL_X;
+		fieldModel.elementsModel.currentChunk.y = MOVED_Y;
+		var stackCommand:StackCommand = new StackCommand();
+		stackCommand.fieldModel = fieldModel;
+		stackCommand.linesRemoveSignal = cast signalPlaceholder;
+		stackCommand.execute();
+		Assert.isTrue(compareArrays(fieldModel.squares, STACKED));
 	}
 
 	@Test
