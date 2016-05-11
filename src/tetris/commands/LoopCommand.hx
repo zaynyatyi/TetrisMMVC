@@ -18,6 +18,6 @@ class LoopCommand extends Command
 	{
 		super.execute();
 		//We have to trigger move signal if we are in play mode only
-		if (!stateModel.isGameover) checkStateSignal.dispatch();
+		if (!stateModel.isGameover && !stateModel.isError) checkStateSignal.dispatch();
 	}
 }

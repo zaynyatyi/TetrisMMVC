@@ -7,6 +7,7 @@ import mmvc.impl.Context;
 import tetris.commands.CheckStateCommand;
 import tetris.commands.ClearCommand;
 import tetris.commands.ExtrudeCommand;
+import tetris.commands.HandleErrorCommand;
 import tetris.commands.LinesRemoveCommand;
 import tetris.commands.LoopCommand;
 import tetris.commands.MoveCommand;
@@ -21,6 +22,7 @@ import tetris.models.StateModel;
 import tetris.models.StatsModel;
 import tetris.signals.CheckStateSignal;
 import tetris.signals.ClearSignal;
+import tetris.signals.ErrorSignal;
 import tetris.signals.ExtrudeSignal;
 import tetris.signals.LinesRemoveSignal;
 import tetris.signals.LoopSignal;
@@ -64,6 +66,8 @@ class ApplicationContext extends Context
 		commandMap.mapSignalClass(MoveRightSignal, MoveRightCommand);
 		commandMap.mapSignalClass(MoveDownSignal, MoveDownCommand);
 		commandMap.mapSignalClass(RotateSignal, RotateCommand);
+		//Error handling signal
+		commandMap.mapSignalClass(ErrorSignal, HandleErrorCommand);
 
 		//Mapping signals which will be used by mediators to update related views
 		injector.mapSingleton(UpdateStatsSignal);

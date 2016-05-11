@@ -80,4 +80,13 @@ class StateView extends DataView<StateModel>
 				dispatch(MOVE_LEFT_SIGNAL, this);
 		}
 	}
+
+	override function dataChanged()
+	{
+		super.dataChanged();
+		if (data.isError) {
+			button.onclick = null;
+			button.innerHTML = "Unable to start game";
+		}
+	}
 }

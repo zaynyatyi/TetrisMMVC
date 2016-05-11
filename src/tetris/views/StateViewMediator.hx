@@ -3,7 +3,9 @@ package tetris.views;
 import core.View;
 import haxe.Timer;
 import mmvc.impl.Mediator;
+import tetris.models.StateModel;
 import tetris.signals.ClearSignal;
+import tetris.signals.ErrorSignal;
 import tetris.signals.LoopSignal;
 import tetris.signals.userInput.MoveDownSignal;
 import tetris.signals.userInput.MoveLeftSignal;
@@ -16,12 +18,15 @@ class StateViewMediator extends Mediator<StateView>
 {
 	@inject public var loopSignal:LoopSignal;
 	@inject public var finishGameSignal:FinishGameSignal;
+	@inject public var errorSignal:ErrorSignal;
 	@inject public var clearSignal:ClearSignal;
 
 	@inject public var moveRightSignal:MoveRightSignal;
 	@inject public var moveLeftSignal:MoveLeftSignal;
 	@inject public var moveDownSignal:MoveDownSignal;
 	@inject public var rotateSignal:RotateSignal;
+
+	@inject public var stateModel:StateModel;
 
 	var loopTimer:Timer;
 
@@ -75,6 +80,11 @@ class StateViewMediator extends Mediator<StateView>
 	{
 		var stateView:StateView = cast(view, StateView);
 		stateView.show();
+		if (stateModel.isError) {
+			view.setData(stateModel, true);
+			loopTimer.run = null;
+			loopTimer.stop();
+		}
 	}
 
 	function requestFrameUpdate():Void
